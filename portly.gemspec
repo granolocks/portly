@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["gabe@gabekoss.com"]
   spec.summary       = %q{Library for looking up TCP port meta information.}
   spec.description   = %q{This library exposes information from the IANA Service Name and Transport Portocolo Port number database}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/granolocks/portly"
   spec.license       = "AGPLv3"
 
   file_list = `git ls-files -z`.split("\x0")
