@@ -1,4 +1,6 @@
-describe Portly::VERSION do
+require 'spec_helper'
+
+RSpec.describe "Portly::VERSION" do
   it "is a string value" do
     expect(Portly::VERSION.class).to eq(String)
   end

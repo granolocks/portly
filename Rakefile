@@ -1,17 +1,11 @@
 $:.unshift(File.dirname(File.expand_path('../lib/portly.rb',__FILE__)))
 require 'portly'
-require 'csv'
-require 'json'
-
-DATA_DIR = File.expand_path('../data/',__FILE__)
-CSV_FILE = File.join(DATA_DIR, "service-names-port-numbers.csv")
-JSON_FILE = File.join(DATA_DIR, "service-names-port-numbers.json")
 
 desc "Generate JSON file from CSV"
 task "generate" do 
   ports = []
 
-  CSV.foreach(CSV_FILE, headers: true) do |row|
+  CSV.foreach(Portly::CSV_FILE, headers: true) do |row|
     headers = row.headers.map{|x| x.downcase.gsub(/\s/,'_')}
     fields = row.fields
     entry = Hash[headers.zip(row.fields)]
@@ -20,11 +14,23 @@ task "generate" do
   end
 
   ports_hash = ports.each_with_object({}) do |port, collector|
-    collector[port["port_number"]] ||= []
-    collector[port["port_number"]] << port
+    collector[port["port_number"].to_i] ||= []
+    collector[port["port_number"].to_i] << port
   end
 
-  File.write(JSON_FILE, JSON.generate(ports_hash))
+  File.write(Portly::JSON_FILE, JSON.generate(ports_hash))
 end
 
 
+task :environment do
+  base_path = File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
+  $LOAD_PATH.unshift(base_path) unless $LOAD_PATH.include?(base_path)
+
+  require 'portly'
+end
+
+desc "Start a pry session with the code loaded"
+task :console => [:environment] do
+  require 'pry'
+  pry
+end
