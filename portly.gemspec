@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'portly/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "louis"
+  spec.name          = "portly"
   spec.version       = Portly::VERSION
   spec.authors       = ["Gabe Koss"]
   spec.email         = ["gabe@gabekoss.com"]
